@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include <exception>
 
 using namespace std;
 
@@ -16,6 +17,15 @@ public:
     void encrypt(string ,string);
     void decrypt(string ,string);
 };
+
+class unableToOpenFileException:public exception
+{
+public:
+        virtual const char* what()
+        {
+            return "Unable to open file";
+        }
+}myExep;
 
 int main(int argc,char* argv[])
 {
@@ -54,7 +64,7 @@ void XOREncryptor::encrypt(string fileName,string key)
         iFile.open(fileName,ios::binary|ios::in);
         oFile.open(outFileName,ios::binary|ios::out|ios::trunc);
         if(!(oFile.is_open()||iFile.is_open()))
-            throw 1;
+            throw myExep;
         cout<<"Encrypting File... Please wait!!!"<<endl;
         while(iFile.read(charptr,1))
         {
@@ -65,9 +75,9 @@ void XOREncryptor::encrypt(string fileName,string key)
         iFile.close();
         oFile.close();
     }
-    catch(int error)
+    catch(unableToOpenFileException ex)
     {
-        cout<<"ERROR during opening file."<<endl;
+        cout<<ex.what()<<endl;
         exit(1);
     }
     cout<<"\nFile encrypted successfully!!!"<<endl;
@@ -88,7 +98,7 @@ void XOREncryptor::decrypt(string fileName,string key)
         iFile.open(fileName,ios::binary|ios::in);
         oFile.open(outFileName,ios::binary|ios::out|ios::trunc);
         if(!(oFile.is_open()||iFile.is_open()))
-            throw 1;
+            throw myExep;
         cout<<"Decrypting File... Please wait!!!"<<endl;
         while(iFile.read(charptr,1))
         {
@@ -99,9 +109,9 @@ void XOREncryptor::decrypt(string fileName,string key)
         iFile.close();
         oFile.close();
     }
-    catch(int error)
+    catch(unableToOpenFileException ex)
     {
-        cout<<"ERROR during opening file."<<endl;
+        cout<<ex.what()<<endl;
         exit(1);
     }
     cout<<"\nFile decrypted successfully!!!"<<endl;
