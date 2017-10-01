@@ -32,7 +32,6 @@ int main(int argc,char* argv[])
     else
         cout<<"Usage: "<<argv[0]<<" <encrypt/decrypt> <filename> <key>"<<endl;
     cout<<"Enter enter key to continue..."<<endl;
-    cin.ignore();
     cin.get();
     return 0;
 }
