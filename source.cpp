@@ -23,7 +23,7 @@ class unableToOpenFileException:public exception
 public:
         virtual const char* what()
         {
-            return "Unable to open file";
+            return "Unable to open file!!! Exiting...";
         }
 }myExep;
 
@@ -75,7 +75,7 @@ void XOREncryptor::encrypt(string fileName,string key)
         iFile.close();
         oFile.close();
     }
-    catch(unableToOpenFileException ex)
+    catch(exception ex)
     {
         cout<<ex.what()<<endl;
         exit(1);
@@ -109,7 +109,7 @@ void XOREncryptor::decrypt(string fileName,string key)
         iFile.close();
         oFile.close();
     }
-    catch(unableToOpenFileException ex)
+    catch(exception ex)
     {
         cout<<ex.what()<<endl;
         exit(1);
